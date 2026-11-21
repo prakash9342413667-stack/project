@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Login System</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; display: flex; justify-content: center; padding-top: 60px; }
+        .card { background: #1e293b; padding: 2rem; border-radius: 10px; width: 100%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        input { width: 100%; padding: 10px; margin: 8px 0 16px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        button:hover { background: #2563eb; }
+        .alert { padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9rem; }
+        .error { background: #7f1d1d; color: #fecaca; }
+        .success { background: #14532d; color: #bbf7d0; }
+        a { color: #60a5fa; text-decoration: none; }
+        code { background: #0f172a; padding: 4px 8px; border-radius: 4px; display: block; margin: 8px 0; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

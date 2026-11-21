@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Welcome, {{ user['username'] }}</h2>
+<p><strong>Email:</strong> {{ user['email'] }}</p>
+<p><strong>2FA Status:</strong> {{ 'Enabled' if user['two_factor_enabled'] else 'Disabled' }}</p>
+
+{% if user['two_factor_enabled'] %}
+<form method="POST" action="{{ url_for('disable_2fa') }}" style="margin-bottom: 12px;">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <label>Confirm password to disable 2FA</label>
+    <input type="password" name="password" required autocomplete="current-password">
+    <button type="submit" style="background: #6366f1;">Disable 2FA</button>
+</form>
+{% else %}
+<p><a href="{{ url_for('setup_2fa') }}" style="display:block;text-align:center;padding:10px;background:#6366f1;color:white;border-radius:6px;font-weight:bold;margin-bottom:12px;">Enable 2FA</a></p>
+{% endif %}
+
+<form method="POST" action="{{ url_for('logout') }}">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <button type="submit" style="background: #ef4444;">Logout</button>
+</form>
+{% endblock %}

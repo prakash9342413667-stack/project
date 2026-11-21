@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Create Account</h2>
+<form method="POST">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <label>Username</label>
+    <input type="text" name="username" required pattern="[a-zA-Z0-9_]{3,20}" autocomplete="username">
+    <label>Email</label>
+    <input type="email" name="email" required autocomplete="email">
+    <label>Password (min 8 chars, upper, lower, number)</label>
+    <input type="password" name="password" required minlength="8" autocomplete="new-password">
+    <button type="submit">Register</button>
+</form>
+<p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+{% endblock %}

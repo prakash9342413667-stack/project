@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Set up Two-Factor Authentication</h2>
+<ol style="padding-left:1.2rem; line-height:1.6;">
+    <li>Install <strong>Google Authenticator</strong> or <strong>Microsoft Authenticator</strong> on your phone.</li>
+    <li>Tap <strong>+</strong> then <strong>Scan a QR code</strong> and scan the code below.</li>
+    <li>Enter the 6-digit code the app shows to finish.</li>
+</ol>
+{% if qr %}
+<div style="background:#fff; padding:12px; border-radius:8px; width:220px; margin:12px auto;">{{ qr }}</div>
+{% endif %}
+<p>Can't scan? Choose <em>Enter a setup key</em> (time based) and type:</p>
+<code>{{ secret }}</code>
+<form method="POST">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <input type="text" name="code" maxlength="6" pattern="\d{6}" inputmode="numeric" autocomplete="one-time-code" placeholder="123456" required>
+    <button type="submit">Verify &amp; Enable 2FA</button>
+</form>
+<p><a href="{{ url_for('dashboard') }}">Cancel</a></p>
+{% endblock %}
